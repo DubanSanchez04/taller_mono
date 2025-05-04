@@ -1,14 +1,14 @@
 <?php
 namespace App\models\entities;
-
 use App\models\drivers\ConexDB;
 use Exception;
 
-class Ingreso  extends Model{
+class Ingreso extends Model
+{
     protected $id=null;
     protected $Mes=null;
     protected $Año=null;
-    protected $Valor=null;
+    protected $Valor = null;
 
     public static $mesesValidos = [
         'Enero' , 'Febrero', 'Marzo', 'Abril', 'Mayo',
@@ -36,21 +36,20 @@ class Ingreso  extends Model{
         }
         $this->valor = $valor;
     }
-
     public function all()
     {
         $conexDb = new ConexDB();
         $sql = "select * from reports";
         $res = $conexDb->exeSQL($sql);
-        $ingreso = [];
+        $ingresos = [];
         if ($res->num_rows > 0) {
             while ($row = $res->fetch_assoc()) {
-                $ingreso = new reports();
-                $ingreso->set('Id', $row['Id']);
-                $ingreso->set('Mes', $row['Mes']);
-                $ingreso->set('Año', $row['Año']);
-                $ingreso->set('Valor', $row['Valor']);
-                array_push($ingreso, $ingreso);
+                $ingreso = new Ingreso();
+                $ingreso->set('id', $row['id']);
+                $ingreso->set('mes', $row['mes']);
+                $ingreso->set('año', $row['año']);
+                $ingreso->set('valor', $row['valor']);
+                array_push($ingresos, $ingreso);
             }
         }
         $conexDb->close();

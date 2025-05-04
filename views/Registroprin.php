@@ -1,27 +1,12 @@
 <?php
-require_once __DIR__ . '/../../models/entities/Ingreso.php';
-require_once __DIR__ . '/../../controllers/IngresosController.php';
-
-use App\models\entities\Ingreso;
+include  '../models/entities/Ingreso.php';
+include  '../models/entities/model.php';
+include  '../controllers/IngresosController.php';
+include  '../models/drivers/ConexDB.php';
 use App\controllers\IngresosController;
 
 $controlador = new IngresosController();
-
-$mensaje = "";
-if (isset($_POST['submit'])) {
-    try {
-        $resultado = $controlador->registrar($_POST);
-        if ($resultado['success']) {
-            $mensaje = "Ingreso guardado con éxito (ID: " . ($resultado['id'] ?? 'desconocido') . ")";
-        } else {
-            $mensaje = "Error: " . $resultado['message'];
-        }
-    } catch (Exception $e) {
-        $mensaje = "Error: " . $e->getMessage();
-    }
-}
-
-$ingresos = $controlador->listar();
+$ingres=$controlador->getAllIngresos();
 ?>
 
 <!DOCTYPE html>
@@ -37,12 +22,23 @@ $ingresos = $controlador->listar();
 
 <?php if (!empty($mensaje)) echo "<p>$mensaje</p>"; ?>
 
-<form action="" method="post">
+
+<form action="registrar.php" method="post">
     <label>Mes:</label>
     <select name="mes" required>
-        <?php foreach (App\models\entities\Ingreso::$mesesValidos as $mes): ?>
-            <option value="<?= $mes ?>"><?= $mes ?></option>
-        <?php endforeach; ?>
+        <option value="Enero">Enero</option>
+        <option value="Febrero">Febrero</option>
+        <option value="Marzo">Marzo</option>
+        <option value="Abril">Abril</option>
+        <option value="Mayo">Mayo</option>
+        <option value="Junio">Junio</option>
+        <option value="Julio">Julio</option>
+        <option value="Agosto">Agosto</option>
+        <option value="Septiembre">Septiembre</option>
+        <option value="Octubre">Octubre</option>
+        <option value="Noviembre">Noviembre</option>
+        <option value="Diciembre">FebDiciembrerero</option>
+
     </select><br><br>
 
     <label>Año:</label>

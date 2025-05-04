@@ -8,21 +8,19 @@ class ConexDB {
     private $user = 'root';
     private $password = '';
     private $dataBase = 'proyecto_1_db';
-    private $conex;
+    private $conex=null;
 
     public function __construct() {
-        $this->conex = new mysqli($this->host, $this->user, $this->password, $this->dataBase);
-        if ($this->conex->connect_error) {
-            die("Error de conexión: " . $this->conex->connect_error);
-        }
-    }
+        $this->conex = new mysqli(
+            $this->host,
+            $this->user, $this->password,
+            $this->dataBase);
 
-    public function getConnection() {
-        return $this->conex;
     }
-
     public function close() {
         $this->conex->close();
     }
-
+    public function exeSQL($sql) {
+        return $this->conex->query($sql);
+    }
 }

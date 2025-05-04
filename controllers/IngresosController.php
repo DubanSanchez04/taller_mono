@@ -1,11 +1,6 @@
 <?php
 namespace App\controllers;
-
 use App\models\entities\Ingreso;
-
-require_once __DIR__ . '/../models/drivers/ConexDB.php';
-require_once __DIR__ . '/../models/entities/Ingreso.php';
-
 class ingresosController {
     public function getAllIngresos()
     {
