@@ -25,13 +25,4 @@ class ConexDB {
         $this->conex->close();
     }
 
-    public function exeSQL($sql) {
-        $result = $this->conex->query($sql);
-        if (!$result) {
-            throw new \Exception("Error en la consulta SQL: " . $this->conex->error);
-        }
-        return $result;
-    }
-
-
 }
