@@ -52,27 +52,51 @@ class Ingreso extends Model
     {
         $conexDb = new ConexDB();
 
-        $maxIdQuery = "SELECT MAX(id) AS max_id FROM `reports`";
-        $res = $conexDb->exeSQL($maxIdQuery);
-        while ($row = $res->fetch_assoc()) {
-            $newId = ($row && isset($row['max_id'])) ? $row['max_id'] + 1 : 1;
-        }
-        $sql = "INSERT INTO reports (id, month, year) VALUES (?, ?, ?)";
-        $stmt = $conexDb->prepare($sql);
+        $newId = $this->getMaxReport($conexDb);
+        $sqlInsertReport = "INSERT INTO reports (id, month, year) VALUES (?, ?, ?)";
+        $stmt = $conexDb->prepare($sqlInsertReport);
         if ($stmt) {
             $stmt->bind_param("iii", $newId, $this->mes, $this->anio);
-            $result = $stmt->execute();
-            //TODO obtener el id del report
-            // TODO hacer el insert en la tabla de billing
+            $stmt->execute();
             $stmt->close();
-            $conexDb->close();
-
-            return $result;
+            $newBillsId = $this->getMaxBills($conexDb);
+            $sqlInsertBilling = "INSERT INTO bills (id,value,idCategory,idReport) VALUES (?,?,?,?)";
+            $stmtBilling = $conexDb->prepare($sqlInsertBilling);
+            if ($stmtBilling) {
+                $category = 1;
+                $stmtBilling->bind_param("iiii", $newBillsId, $this->valor, $category, $newId);
+                $result = $stmtBilling->execute();
+                $stmtBilling->close();
+                $conexDb->close();
+                return $result;
+            } else {
+                echo "Error en prepare: " . $conexDb->prepare($sqlInsertBilling)->error;
+                $conexDb->close();
+                return false;
+            }
         } else {
-            echo "Error en prepare: " . $conexDb->prepare($sql)->error;
+            echo "Error en prepare: " . $conexDb->prepare($sqlInsertReport)->error;
             $conexDb->close();
             return false;
         }
+    }
+
+    public function getMaxReport($conexDb)
+    {
+        $maxIdQuery = "SELECT MAX(id) AS max_id FROM `reports`";
+        $res = $conexDb->exeSQL($maxIdQuery);
+        $row = $res->fetch_assoc();
+        $newId = isset($row['max_id']) ? $row['max_id'] + 1 : 1;
+        return $newId;
+    }
+
+    public function getMaxBills($conexDb)
+    {
+        $maxIdQuery = "SELECT MAX(id) AS max_id FROM `bills`";
+        $res = $conexDb->exeSQL($maxIdQuery);
+        $row = $res->fetch_assoc();
+        $newId = isset($row['max_id']) ? $row['max_id'] + 1 : 1;
+        return $newId;
     }
 
     public function update()
