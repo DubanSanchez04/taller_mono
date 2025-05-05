@@ -27,9 +27,9 @@ class ingresosController
 
     public function updateIngreso($request)
     {
+        $this->printMessage($request);
         $model = new Ingreso();
-        $model->set('mes', $request['mes']);
-        $model->set('anio', $request['anio']);
+        $model->set('id', $request['id']);
         $model->set('valor', $request['valor']);
         $res = $model->update();
         return $res ? 'yes' : 'not';

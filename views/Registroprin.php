@@ -66,7 +66,7 @@ $ingres=$controlador->getAllIngresos();
                 <td><?= htmlspecialchars($ing->get('anio')) ?></td>
                 <td><?= htmlspecialchars($ing->get('valor')) ?></td>
                 <td>
-                    <a href="./ActionsIngre/Modificar.php?id=<?= htmlspecialchars($ing->get('id')) ?>">Editar</a>
+                    <a href="ActionsIngre/ModificarIngre.php?id=<?= htmlspecialchars($ing->get('id')) ?>">Modificar.</a>
                     <form action="./ActionsIngre/Eliminar.php" method="post" style="display:inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ingreso?');">
                         <input type="hidden" name="id" value="<?= htmlspecialchars($ing->get('id')) ?>">
                         <button type="submit">Eliminar</button>

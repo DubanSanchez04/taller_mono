@@ -102,12 +102,16 @@ class Ingreso extends Model
     public function update()
     {
         $conexDb = new ConexDB();
-        $sql = "update reports set ";
-        $sql .= "id='" . $this->id . "',";
-        $sql .= "mes='" . $this->mes . "',";
-        $sql .= "anio=" . $this->anio . " ";
-        $sql .= " where id=" . $this->id;
-        $res = $conexDb->exeSQL($sql);
+        $sql = "UPDATE bills SET value = ? WHERE idReport = ?";
+        $stmt = $conexDb->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param("ii", $this->valor, $this->id);
+            $res = $stmt->execute();
+            $stmt->close();
+        } else {
+            $res = false;
+        }
+
         $conexDb->close();
         return $res;
     }

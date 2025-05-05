@@ -49,7 +49,7 @@ $resultado = $controller->listar();
                     <td><?= htmlspecialchars($ingreso['año']) ?></td>
                     <td><?= number_format($ingreso['valor'], 2) ?></td>
                     <td class="actions">
-                        <a href="Modificar.php?id=<?= $ingreso['id'] ?>">Editar</a>
+                        <a href="ModificarIngre.php?id=<?= $ingreso['id'] ?>">Editar</a>
                         <form action="Eliminar.php" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="<?= $ingreso['id'] ?>">
                             <button type="submit">Eliminar</button>
