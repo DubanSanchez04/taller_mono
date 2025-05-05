@@ -56,7 +56,7 @@ class Ingreso extends Model
         $sqlInsertReport = "INSERT INTO reports (id, month, year) VALUES (?, ?, ?)";
         $stmt = $conexDb->prepare($sqlInsertReport);
         if ($stmt) {
-            $stmt->bind_param("iii", $newId, $this->mes, $this->anio);
+            $stmt->bind_param("isi", $newId, $this->mes, $this->anio);
             $stmt->execute();
             $stmt->close();
             $newBillsId = $this->getMaxBills($conexDb);
