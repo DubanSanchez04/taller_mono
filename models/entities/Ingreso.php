@@ -102,12 +102,16 @@ class Ingreso extends Model
     public function update()
     {
         $conexDb = new ConexDB();
-        $sql = "update reports set ";
-        $sql .= "id='" . $this->id . "',";
-        $sql .= "mes='" . $this->mes . "',";
-        $sql .= "anio=" . $this->anio . " ";
-        $sql .= " where id=" . $this->id;
-        $res = $conexDb->exeSQL($sql);
+        $sql = "UPDATE bills SET value = ? WHERE idReport = ?";
+        $stmt = $conexDb->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param("ii", $this->valor, $this->id);
+            $res = $stmt->execute();
+            $stmt->close();
+        } else {
+            $res = false;
+        }
+
         $conexDb->close();
         return $res;
     }
@@ -115,11 +119,20 @@ class Ingreso extends Model
     public function delete()
     {
         $conexDb = new ConexDB();
-        $sql = "delete from reports where id=" . $this->id;
+        $sqlDeleteBills = "DELETE FROM bills WHERE idReport = ?";
+        $stmt = $conexDb->prepare($sqlDeleteBills);
+        $stmt->bind_param("i", $this->id);
+        $stmt->execute();
+        $stmt->close();
 
-        $res = $conexDb->exeSQL($sql);
+        $sqlDeleteReports = "DELETE FROM reports WHERE id = ?";
+        $stmtReport = $conexDb->prepare($sqlDeleteReports);
+        $stmtReport->bind_param("i", $this->id);
+        $stmtReport->execute();
+        $stmtReport->close();
+
         $conexDb->close();
-        return $res;
+        return true;
     }
 
     public function find()

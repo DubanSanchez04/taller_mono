@@ -27,9 +27,9 @@ class ingresosController
 
     public function updateIngreso($request)
     {
+
         $model = new Ingreso();
-        $model->set('mes', $request['mes']);
-        $model->set('anio', $request['anio']);
+        $model->set('id', $request['id']);
         $model->set('valor', $request['valor']);
         $res = $model->update();
         return $res ? 'yes' : 'not';
@@ -39,9 +39,6 @@ class ingresosController
     {
         $model = new Ingreso();
         $model->set('id', $id);
-        if (empty($model->find())) {
-            return "empty";
-        }
         $res = $model->delete();
         return $res ? 'yes' : 'not';
     }
