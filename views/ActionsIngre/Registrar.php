@@ -7,9 +7,9 @@ use App\controllers\IngresosController;
 
 $controller = new IngresosController();
 
-$res=empty($_POST['idPerson']);
-    $controller->saveNewIngreso($_POST);
-    $controller->updateIngreso($_POST);
+$res=empty($_POST['id']);
+$controller->saveNewIngreso($_POST);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

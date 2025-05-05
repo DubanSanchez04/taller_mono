@@ -23,4 +23,8 @@ class ConexDB {
     public function exeSQL($sql) {
         return $this->conex->query($sql);
     }
+
+    public function prepare($sql) {
+        return $this->conex->prepare($sql);
+    }
 }

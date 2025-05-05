@@ -15,4 +15,5 @@ abstract class Model
             $this->$property = $value;
         }
     }
+
 }

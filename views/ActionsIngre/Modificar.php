@@ -5,8 +5,10 @@ use App\controllers\IngresosController;
 
 $mensaje = "";
 
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $controller = new IngresosController();
+    $controller->updateIngreso($_POST);
     $resultado = $controller->modificar([
         "id" => $_POST["id"],
         "valor" => $_POST["valor"]

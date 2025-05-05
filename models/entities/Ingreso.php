@@ -12,38 +12,6 @@ class Ingreso extends Model
     protected $anio = null;
     protected $valor = null;
 
-    /**
-     * @return null
-     */
-    public function getValor()
-    {
-        return $this->valor;
-    }
-    /**
-     * @return null
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return null
-     */
-    public function getMes()
-    {
-        return $this->mes;
-    }
-
-    /**
-     * @return null
-     */
-    public function getAnio()
-    {
-        return $this->anio;
-    }
-
-
     public static $mesesValidos = [
         'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
         'Junio', 'Julio', 'Agosto', 'Septiembre',
@@ -62,7 +30,7 @@ class Ingreso extends Model
     public function all()
     {
         $conexDb = new ConexDB();
-        $sql = "SELECT DISTINCT r.id, r.month, r.year, b.value FROM `bills` b INNER JOIN `reports` r on r.id = b.idReport";
+        $sql = "SELECT DISTINCT r.id, r.month, r.year, b.value FROM `bills` b RIGHT JOIN `reports` r on r.id = b.idReport";
         $res = $conexDb->exeSQL($sql);
         $ingresos = [];
         if ($res->num_rows > 0) {
@@ -82,13 +50,28 @@ class Ingreso extends Model
 
     public function save()
     {
-        {
-            $conexDb = new ConexDB();
-            $sql = "insert into reports (id, month, year) values ";
-            $sql .= "('" . $this->id . "','" . $this->mes . "'," . $this->anio . ")";
-            $res = $conexDb->exeSQL($sql);
+        $conexDb = new ConexDB();
+
+        $maxIdQuery = "SELECT MAX(id) AS max_id FROM `reports`";
+        $res = $conexDb->exeSQL($maxIdQuery);
+        while ($row = $res->fetch_assoc()) {
+            $newId = ($row && isset($row['max_id'])) ? $row['max_id'] + 1 : 1;
+        }
+        $sql = "INSERT INTO reports (id, month, year) VALUES (?, ?, ?)";
+        $stmt = $conexDb->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param("iii", $newId, $this->mes, $this->anio);
+            $result = $stmt->execute();
+            //TODO obtener el id del report
+            // TODO hacer el insert en la tabla de billing
+            $stmt->close();
             $conexDb->close();
-            return $res;
+
+            return $result;
+        } else {
+            echo "Error en prepare: " . $conexDb->prepare($sql)->error;
+            $conexDb->close();
+            return false;
         }
     }
 
@@ -109,7 +92,7 @@ class Ingreso extends Model
     {
         $conexDb = new ConexDB();
         $sql = "delete from reports where id=" . $this->id;
-        
+
         $res = $conexDb->exeSQL($sql);
         $conexDb->close();
         return $res;
@@ -121,8 +104,8 @@ class Ingreso extends Model
         $sql = "select * from reports where id=" . $this->id;
         $res = $conexDb->exeSQL($sql);
         $ingreso = null;
-        if($res->num_rows>0){
-            while($row = $res->fetch_assoc()){
+        if ($res->num_rows > 0) {
+            while ($row = $res->fetch_assoc()) {
                 $ingreso = new Ingreso();
                 $ingreso->set('Id', $row['Id']);
                 $ingreso->set('Mes', $row['Mes']);
@@ -130,14 +113,19 @@ class Ingreso extends Model
                 $ingreso->set('Valor', $row['Valor']);
                 break;
             }
-            }
+        }
         $conexDb->close();
         return $ingreso;
     }
 
 
-    function printMesage($text)
+    function printMessage($data)
     {
-        echo "<script>console.log(JSON.stringify($text))</script>";
+        $json = json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+        if ($json === false) {
+            echo "<script>console.error('Error al codificar en JSON');</script>";
+        } else {
+            echo "<script>console.log($json);</script>";
+        }
     }
 }
