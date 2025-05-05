@@ -24,10 +24,8 @@ class ingresosController
         return $res ? 'yes' : 'not';
     }
 
-
     public function updateIngreso($request)
     {
-
         $model = new Ingreso();
         $model->set('id', $request['id']);
         $model->set('valor', $request['valor']);
@@ -42,14 +40,6 @@ class ingresosController
         $res = $model->delete();
         return $res ? 'yes' : 'not';
     }
-
-    public function getIngreso($id)
-    {
-        $model = new Ingreso();
-        $model->set('id', $id);
-        return $model->find();
-    }
-
     function printMessage($data)
     {
         $json = json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
