@@ -9,5 +9,4 @@ switch ($action) {
     case 'listar':
 
 }
-
 header("location: views/Registroprin.php");
