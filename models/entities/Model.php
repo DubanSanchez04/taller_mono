@@ -10,8 +10,9 @@ abstract class Model
     {
         return $this->{$nameProp};
     }
-    public function set($nameProp, $value)
-    {
-        $this->{$nameProp} = $value;
+    public function set($property, $value) {
+        if (property_exists($this, $property)) {
+            $this->$property = $value;
+        }
     }
 }

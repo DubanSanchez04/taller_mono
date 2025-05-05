@@ -11,20 +11,24 @@ class ingresosController {
 
     public function saveNewIngreso($resquest)
     {
-        $model = new Persona();
-        $model->set('Id', $resquest['IDingreso']);
-        $model->set('Mes', $resquest['Mesingreso']);
-        $model->set('año', $resquest['Añoingreso']);
-        $model->set('Valor', $resquest['Valoringreso']);
+        $model = new Ingreso();
+
+        $model->set('Id', isset($resquest['id']) ? $resquest['id'] : null);
+        $model->set('Mes', isset($resquest['mes']) ? $resquest['mes'] : null);
+        $model->set('Anio', isset($resquest['anio']) ? $resquest['anio'] : null);
+        $model->set('Valor', isset($resquest['valor']) ? $resquest['valor'] : null);
+
         $res = $model->save();
+
         return $res ? 'yes' : 'not';
     }
+
 
     public function updateIngreso($resquest){
         $model = new Ingreso();
         $model->set('Id', $resquest['IDingreso']);
         $model->set('Mes', $resquest['Mesingreso']);
-        $model->set('año', $resquest['Añoingreso']);
+        $model->set('anio', $resquest['año']);
         $model->set('Valor', $resquest['Valoringreso']);
         $res = $model->update();
         return $res ? 'yes' : 'not';

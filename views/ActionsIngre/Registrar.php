@@ -1,17 +1,15 @@
 <?php
-include '../../models/db.php/ConexDB.php';
+include '../../models/drivers/ConexDB.php';
 include '../../models/entities/Ingreso.php';
-include '../../controllers/IngresoController.php';
+include '../../controllers/IngresosController.php';
 
 use App\controllers\IngresosController;
 
 $controller = new IngresosController();
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    header('location: ../views/Ingresos/Ingresos.php');
-}
-$res=empty($_POST['idPerson'])
-    ? $controller->saveNewPerson($_POST)
-    : $controller->updatePerson($_POST);
+
+$res=empty($_POST['idPerson']);
+    $controller->saveNewIngreso($_POST);
+    $controller->updateIngreso($_POST);
 ?>
 <!DOCTYPE html>
 <html lang="es">
