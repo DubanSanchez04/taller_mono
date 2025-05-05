@@ -19,7 +19,7 @@ if (isset($_POST['id'])) {
     <title>Eliminar</title>
 </head>
 <body>
-<h2>Registro eliminado.</h2>
+<h2>Registro eliminado correctamente.</h2>
 <?php if ($res === 'yes'): ?>
     <p>Registro eliminado.</p>
 <?php elseif ($res === 'not'): ?>
