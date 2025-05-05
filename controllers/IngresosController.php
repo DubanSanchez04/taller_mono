@@ -39,9 +39,6 @@ class ingresosController
     {
         $model = new Ingreso();
         $model->set('id', $id);
-        if (empty($model->find())) {
-            return "empty";
-        }
         $res = $model->delete();
         return $res ? 'yes' : 'not';
     }
