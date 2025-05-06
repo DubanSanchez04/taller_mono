@@ -1,23 +1,31 @@
 <?php
 namespace App\models\entities;
 
-use App\models\drivers\ConexDB;
-use Exception;
-
 class Gasto {
     private $id;
-    private $categoria;
-    private $mes;
-    private $año;
     private $valor;
+    private $idCategoria;
+    private $idReporte;
+    private $categoriaNombre; // Para mostrar el nombre en lugar del ID
 
-    // ... setters con validaciones similares ...
+    public function __construct($id, $valor, $idCategoria, $idReporte, $categoriaNombre = null) {
+        $this->id = $id;
+        $this->valor = $valor;
+        $this->idCategoria = $idCategoria;
+        $this->idReporte = $idReporte;
+        $this->categoriaNombre = $categoriaNombre;
+    }
 
-    public function registrar() {
-        $db = new ConexDB();
-        $stmt = $db->prepare("INSERT INTO gastos (categoria, mes, año, valor) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssid", $this->categoria, $this->mes, $this->año, $this->valor);
-        $stmt->execute();
-        $db->close();
+    public function get($propiedad) {
+        if (property_exists($this, $propiedad)) {
+            return $this->$propiedad;
+        }
+        return null;
+    }
+
+    public function set($propiedad, $valor) {
+        if (property_exists($this, $propiedad)) {
+            $this->$propiedad = $valor;
+        }
     }
 }
