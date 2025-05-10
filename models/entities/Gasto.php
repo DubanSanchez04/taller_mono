@@ -32,7 +32,7 @@ class Gasto extends ModelG
         $conexDb = new ConexDB();
         $sql = "SELECT DISTINCT r.id, r.month, r.year, b.value FROM `bills` b RIGHT JOIN `reports` r on r.id = b.idReport";
         $res = $conexDb->exeSQL($sql);
-        $Gasto = [];
+        $Gastos = [];
         if ($res->num_rows > 0) {
             while ($row = $res->fetch_assoc()) {
                 $Gasto = new Gasto();

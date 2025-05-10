@@ -75,7 +75,7 @@ $gas=$controlador->getAllGastos();
         <?php endforeach; ?>
     </table>
 <?php else: ?>
-    <p>No hay ingresos registrados.</p>
+    <p>No hay Gastos registrados.</p>
 <?php endif; ?>
 </body>
 </html>
