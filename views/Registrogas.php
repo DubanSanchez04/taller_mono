@@ -2,11 +2,16 @@
 include  '../models/entities/Gasto.php';
 include  '../controllers/GastosController.php';
 include  '../models/drivers/ConexDB.php';
+include  '../models/entities/Categoria.php';
+include  '../controllers/CategoriasController.php';
+
 use App\controllers\GastosController;
+use App\controllers\CategoriasController;
 
-$controlador = new GastosController();
-$gas=$controlador->getAllGastos();
-
+$gastoController = new GastosController();
+$categoriaController = new CategoriasController();
+$gas = $gastoController->getAllGastos();
+$categorias = $categoriaController->getAllCategorias();
 ?>
 
 <!DOCTYPE html>
@@ -21,22 +26,16 @@ $gas=$controlador->getAllGastos();
 <h1>REGISTRAR GASTOS</h1>
 <?php if (!empty($mensaje)) echo "<p>$mensaje</p>"; ?>
 
+<div style="text-align: right; margin-bottom: 20px;">
+    <a href="Categorias.php" style="padding: 8px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 4px;">Gestionar Categorías</a>
+</div>
+
 <form action="ActionsGasto/Registrarg.php" method="post">
     <label>Mes:</label>
     <select name="mes" required>
-        <option value="enero">Enero</option>
-        <option value="febrero">Febrero</option>
-        <option value="marzo">Marzo</option>
-        <option value="abril">Abril</option>
-        <option value="mayo">Mayo</option>
-        <option value="junio">Junio</option>
-        <option value="julio">Julio</option>
-        <option value="agosto">Agosto</option>
-        <option value="septiembre">Septiembre</option>
-        <option value="octubre">Octubre</option>
-        <option value="noviembre">Noviembre</option>
-        <option value="diciembre">Diciembre</option>
-
+        <?php foreach (App\models\entities\Gasto::$mesesValidos as $mes): ?>
+            <option value="<?= strtolower($mes) ?>"><?= $mes ?></option>
+        <?php endforeach; ?>
     </select>
     <br>
     <label for="anio">Año:</label>
@@ -46,39 +45,23 @@ $gas=$controlador->getAllGastos();
     <input type="number" name="valor" step="0.01" required><br><br>
 
     <label for="categoria">Categoría:</label>
-
-<select name="categoria" id="categoria" required onchange="mostrarCamposOtro(this.value)">
-    <option value="">Seleccione una categoría</option>
-    <option value="Cine">Cine</option>
-    <option value="Hogar">Hogar</option>
-    <option value="Viajes">Viajes</option>
-    <option value="Otro">Otro</option>
-</select><br><br>
-
-<!-- Campo siempre visible para porcentaje -->
-<div>
-    <label for="porcentaje">Porcentaje:</label>
-    <input type="number" name="porcentaje" step="0.01" min="0" max="100" required><br><br>
-</div>
-
-<!-- Campo solo visible si elige "Otro" -->
-<div id="otraCategoria" style="display:none;">
-    <label for="nuevaCategoria">Nombre nueva categoría:</label>
-    <input type="text" name="nuevaCategoria"><br><br>
-</div>
-
-<script>
-function mostrarCamposOtro(valor) {
-    document.getElementById('otraCategoria').style.display = (valor === 'Otro') ? 'block' : 'none';
-}
-</script>
+    <select name="categoria" id="categoria" required>
+        <option value="">Seleccione una categoría</option>
+        <?php foreach ($categorias as $categoria): ?>
+            <option value="<?= htmlspecialchars($categoria->get('name')) ?>">
+                <?= htmlspecialchars($categoria->get('name')) ?> (<?= htmlspecialchars($categoria->get('percentage')) ?>%)
+            </option>
+        <?php endforeach; ?>
+        <option value="Otro">Otro</option>
+    </select><br><br>
+    
 
     <button type="submit" name="submit">Guardar</button>
 </form>
 
 <h2>Lista de Gastos</h2>
 
-<?php if  (!empty($gas)): ?>
+<?php if (!empty($gas)): ?>
    <table border="1">
     <tr>
         <th>Mes</th>
@@ -107,5 +90,20 @@ function mostrarCamposOtro(valor) {
 <?php else: ?>
     <p>No hay Gastos registrados.</p>
 <?php endif; ?>
+
+<script>
+function mostrarCamposOtro(valor) {
+    document.getElementById('otraCategoria').style.display = (valor === 'Otro') ? 'block' : 'none';
+    
+    // Actualizar automáticamente el porcentaje si se selecciona una categoría existente
+    if (valor !== 'Otro' && valor !== '') {
+        const porcentaje = document.querySelector(`#categoria option[value="${valor}"]`).dataset.porcentaje;
+        document.getElementById('porcentajeInput').value = porcentaje;
+    } else if (valor === 'Otro') {
+        document.getElementById('porcentajeInput').value = '';
+    }
+}
+</script>
+
 </body>
 </html>

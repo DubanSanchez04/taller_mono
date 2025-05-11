@@ -37,10 +37,14 @@ public function saveNewGasto($request)
 {
     $model = new Gasto();
     $nombre = $request['categoria'];
-    $porcentaje = floatval($request['porcentaje']);
+    
+    // Utilizamos el porcentaje del formulario directamente, con un valor predeterminado de 0
+    $porcentaje = isset($request['porcentaje']) ? floatval($request['porcentaje']) : 0;
+    
     $db = new \App\models\drivers\ConexDB();
 
     if ($nombre === 'Otro' && !empty($request['nuevaCategoria'])) {
+        // Si se seleccionó "Otro" y se proporcionó un nombre nuevo, usamos ese nombre
         $nombre = $request['nuevaCategoria'];
         $stmt = $db->prepare("INSERT INTO categories (name, percentage) VALUES (?, ?)");
         $stmt->bind_param("sd", $nombre, $porcentaje);
@@ -104,7 +108,7 @@ public function updateGasto($request)
     $model->set('id', $request['id']);
     $model->set('valor', $request['valor']);
     
-    // Si la categoría viene en la solicitud, actualizar también ese campo
+    // Actualizar la categoría si viene en la solicitud
     if (isset($request['idCategory'])) {
         $model->set('idCategory', $request['idCategory']);
     }
