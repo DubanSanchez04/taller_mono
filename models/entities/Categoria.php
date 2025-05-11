@@ -50,17 +50,37 @@ class Categoria extends ModelG
         return $categorias;
     }
 
-    public function update()
-    {
-        $db = new ConexDB();
-        $sql = "UPDATE categories SET name = ?, percentage = ? WHERE id = ?";
-        $stmt = $db->prepare($sql);
-        $stmt->bind_param("sdi", $this->name, $this->percentage, $this->id);
-        $result = $stmt->execute();
-        $stmt->close();
-        $db->close();
-        return $result;
+   public function update($fields = ['name', 'percentage'])
+{
+    $db = new ConexDB();
+    $updates = [];
+    $params = [];
+    $types = '';
+
+    if (in_array('name', $fields)) {
+        $updates[] = "name = ?";
+        $params[] = $this->name;
+        $types .= 's';
     }
+
+    if (in_array('percentage', $fields)) {
+        $updates[] = "percentage = ?";
+        $params[] = $this->percentage;
+        $types .= 'd';
+    }
+
+    $params[] = $this->id;
+    $types .= 'i';
+
+    $sql = "UPDATE categories SET " . implode(', ', $updates) . " WHERE id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param($types, ...$params);
+
+    $result = $stmt->execute();
+    $stmt->close();
+    $db->close();
+    return $result;
+}
 
     public function delete()
     {

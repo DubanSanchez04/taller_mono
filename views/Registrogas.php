@@ -20,7 +20,7 @@ $categorias = $categoriaController->getAllCategorias();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Gastos</title>
-    <link rel="stylesheet" href="css/styleregisgastos.css">
+    <link rel="stylesheet" href="css/styleregisgas.css">
 </head>
 <body>
 <h1>REGISTRAR GASTOS</h1>

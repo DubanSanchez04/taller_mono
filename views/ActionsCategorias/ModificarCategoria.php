@@ -42,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
         <label for="name">Nombre:</label>
         <input type="text" name="name" value="<?= htmlspecialchars($categoria->get('name')) ?>" required><br><br>
         
-        <label for="percentage">Porcentaje:</label>
-        <input type="number" name="percentage" step="0.01" min="0.01" max="100" value="<?= htmlspecialchars($categoria->get('percentage')) ?>" required><br>
-        <small>El porcentaje debe ser mayor que 0 y no superar el 100%</small><br><br>
+<p><strong>Porcentaje:</strong> <?= htmlspecialchars($categoria->get('percentage')) ?>%</p>
+
+
         
         <input type="submit" value="Modificar">
     </form>
