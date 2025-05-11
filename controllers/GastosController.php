@@ -96,14 +96,21 @@ public function saveNewGasto($request)
 
 
 
-    public function updateGasto($request)
-    {
-        $model = new Gasto();
-        $model->set('id', $request['id']);
-        $model->set('valor', $request['valor']);
-        $res = $model->update();
-        return $res ? 'yes' : 'not';
+    
+public function updateGasto($request)
+{
+    $model = new Gasto();
+    $model->set('id', $request['id']);
+    $model->set('valor', $request['valor']);
+    
+    // Si la categoría viene en la solicitud, actualizar también ese campo
+    if (isset($request['idCategory'])) {
+        $model->set('idCategory', $request['idCategory']);
     }
+    
+    $res = $model->update();
+    return $res ? 'yes' : 'not';
+}
 
     public function removeGasto($id)
     {
