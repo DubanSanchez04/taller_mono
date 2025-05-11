@@ -48,13 +48,23 @@ $categorias = $categoriaController->getAllCategorias();
     <select name="categoria" id="categoria" required>
         <option value="">Seleccione una categoría</option>
         <?php foreach ($categorias as $categoria): ?>
-            <option value="<?= htmlspecialchars($categoria->get('name')) ?>">
+            <option value="<?= htmlspecialchars($categoria->get('name')) ?>" 
+                   data-id="<?= htmlspecialchars($categoria->get('id')) ?>">
                 <?= htmlspecialchars($categoria->get('name')) ?> (<?= htmlspecialchars($categoria->get('percentage')) ?>%)
             </option>
         <?php endforeach; ?>
         <option value="Otro">Otro</option>
     </select><br><br>
     
+    <!-- Campos para nueva categoría (ocultos por defecto) -->
+    <div id="otraCategoria" style="display: none;">
+        <label for="nuevaCategoria">Nueva Categoría:</label>
+        <input type="text" name="nuevaCategoria" id="nuevaCategoriaInput"><br><br>
+        
+        <label for="porcentaje">Porcentaje (%):</label>
+        <input type="number" name="porcentaje" id="porcentajeInput" step="0.01" min="0.01" max="100"><br>
+        <small>El porcentaje debe ser mayor que 0 y no superar el 100%</small><br><br>
+    </div>
 
     <button type="submit" name="submit">Guardar</button>
 </form>
@@ -92,17 +102,22 @@ $categorias = $categoriaController->getAllCategorias();
 <?php endif; ?>
 
 <script>
-function mostrarCamposOtro(valor) {
-    document.getElementById('otraCategoria').style.display = (valor === 'Otro') ? 'block' : 'none';
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtener referencias a los elementos
+    const categoriaSelect = document.getElementById('categoria');
+    const otraCategoriaDiv = document.getElementById('otraCategoria');
     
-    // Actualizar automáticamente el porcentaje si se selecciona una categoría existente
-    if (valor !== 'Otro' && valor !== '') {
-        const porcentaje = document.querySelector(`#categoria option[value="${valor}"]`).dataset.porcentaje;
-        document.getElementById('porcentajeInput').value = porcentaje;
-    } else if (valor === 'Otro') {
-        document.getElementById('porcentajeInput').value = '';
-    }
-}
+    // Agregar evento change al select de categoría
+    categoriaSelect.addEventListener('change', function() {
+        if (this.value === 'Otro') {
+            otraCategoriaDiv.style.display = 'block';
+            document.getElementById('porcentajeInput').value = '';
+            document.getElementById('nuevaCategoriaInput').focus();
+        } else {
+            otraCategoriaDiv.style.display = 'none';
+        }
+    });
+});
 </script>
 
 </body>
