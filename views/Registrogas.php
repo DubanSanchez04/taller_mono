@@ -45,35 +45,65 @@ $gas=$controlador->getAllGastos();
     <label for="valor">Valor:</label>
     <input type="number" name="valor" step="0.01" required><br><br>
 
+    <label for="categoria">Categoría:</label>
+
+<select name="categoria" id="categoria" required onchange="mostrarCamposOtro(this.value)">
+    <option value="">Seleccione una categoría</option>
+    <option value="Cine">Cine</option>
+    <option value="Hogar">Hogar</option>
+    <option value="Viajes">Viajes</option>
+    <option value="Otro">Otro</option>
+</select><br><br>
+
+<!-- Campo siempre visible para porcentaje -->
+<div>
+    <label for="porcentaje">Porcentaje:</label>
+    <input type="number" name="porcentaje" step="0.01" min="0" max="100" required><br><br>
+</div>
+
+<!-- Campo solo visible si elige "Otro" -->
+<div id="otraCategoria" style="display:none;">
+    <label for="nuevaCategoria">Nombre nueva categoría:</label>
+    <input type="text" name="nuevaCategoria"><br><br>
+</div>
+
+<script>
+function mostrarCamposOtro(valor) {
+    document.getElementById('otraCategoria').style.display = (valor === 'Otro') ? 'block' : 'none';
+}
+</script>
+
     <button type="submit" name="submit">Guardar</button>
 </form>
 
 <h2>Lista de Gastos</h2>
 
 <?php if  (!empty($gas)): ?>
-    <table border="1">
+   <table border="1">
+    <tr>
+        <th>Mes</th>
+        <th>Año</th>
+        <th>Valor</th>
+        <th>Categoría y porcentaje</th>
+        <th>Acciones</th>
+    </tr>
+    <?php foreach ($gas as $ing): ?>
         <tr>
-
-            <th>Mes</th>
-            <th>Año</th>
-            <th>Valor</th>
-            <th>Acciones</th>
-        </tr>
-        <?php foreach ($gas as $ing): ?>
-            <tr>
-                <td><?= htmlspecialchars($ing->get('mes')) ?></td>
-                <td><?= htmlspecialchars($ing->get('anio')) ?></td>
-                <td><?= htmlspecialchars($ing->get('valor')) ?></td>
-                <td>
+            <td><?= htmlspecialchars($ing->get('mes')) ?></td>
+            <td><?= htmlspecialchars($ing->get('anio')) ?></td>
+            <td><?= htmlspecialchars($ing->get('valor')) ?></td>
+            <td><?= htmlspecialchars($ing->get('categoria')) ?> (<?= htmlspecialchars($ing->get('porcentaje')) ?>%)</td>
+            <td>
                 <a href="ActionsGasto/Modificarg.php?id=<?= htmlspecialchars($ing->get('id')) ?>">Modificar</a>
-                    <form action="./ActionsGasto/Eliminarg.php" method="post" style="display:inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ingreso?');">
-                        <input type="hidden" name="id" value="<?= htmlspecialchars($ing->get('id')) ?>">
-                        <button type="submit">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
+                <form action="./ActionsGasto/Eliminarg.php" method="post" style="display:inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este gasto?');">
+                    <input type="hidden" name="id" value="<?= htmlspecialchars($ing->get('id')) ?>">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
 <?php else: ?>
     <p>No hay Gastos registrados.</p>
 <?php endif; ?>
