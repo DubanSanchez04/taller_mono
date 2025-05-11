@@ -97,6 +97,7 @@ public function saveNewGasto($request)
 
 
     
+
 public function updateGasto($request)
 {
     $model = new Gasto();

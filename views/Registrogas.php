@@ -58,7 +58,7 @@ $gas=$controlador->getAllGastos();
 <!-- Campo siempre visible para porcentaje -->
 <div>
     <label for="porcentaje">Porcentaje:</label>
-    <input type="number" name="porcentaje" step="0.01" min="1" max="100" required><br><br>
+    <input type="number" name="porcentaje" step="0.01" min="0" max="100" required><br><br>
 </div>
 
 <!-- Campo solo visible si elige "Otro" -->

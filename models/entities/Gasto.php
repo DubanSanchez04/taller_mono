@@ -42,11 +42,7 @@ class Gasto extends ModelG
         $sqlInsertReport = "INSERT INTO reports (id, month, year) VALUES (?, ?, ?)";
         $stmt = $conexDb->prepare($sqlInsertReport);
 
-        if (!$stmt) {
-            echo "Error prepare (report): " . $conexDb->getConnection()->error;
-
-            return false;
-        }
+       
 
         $stmt->bind_param("isi", $idReport, $this->mes, $this->anio);
         $stmt->execute();
@@ -58,10 +54,7 @@ class Gasto extends ModelG
         $sqlInsertBill = "INSERT INTO bills (id, value, idCategory, idReport) VALUES (?, ?, ?, ?)";
         $stmtBill = $conexDb->prepare($sqlInsertBill);
 
-        if (!$stmtBill) {
-            echo "Error prepare (report): " . $conexDb->getConnection()->error;
-            return false;
-        }
+        
 
         $stmtBill->bind_param("diii", $this->valor, $idCategoria, $idReport, $idBill);
         $result = $stmtBill->execute();
@@ -97,8 +90,7 @@ class Gasto extends ModelG
         return $gastos;
     }
 
-    
-public function update()
+   public function update()
 {
     $db = new ConexDB();
     
