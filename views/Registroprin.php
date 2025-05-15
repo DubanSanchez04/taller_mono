@@ -78,5 +78,12 @@ $ingres=$controlador->getAllIngresos();
 <?php else: ?>
     <p>No hay ingresos registrados.</p>
 <?php endif; ?>
+
+<div>
+    <a href="../index.php" class="menu-item">
+        <h2>Volver</h2>
+    </a>
+
+</div>
 </body>
 </html>

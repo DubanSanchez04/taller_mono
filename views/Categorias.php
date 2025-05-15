@@ -61,5 +61,12 @@ $categorias = $controlador->getAllCategorias();
     
     <br>
     <a href="Registrogas.php">Volver a Registro de Gastos</a>
+
+    <div>
+        <a href="../index.php" class="menu-item">
+            <h2>Volver</h2>
+        </a>
+
+    </div>
 </body>
 </html>

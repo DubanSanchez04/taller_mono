@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos del encabezado */
+header {
+    background: linear-gradient(135deg, #4a6fa5, #3a5a8a);
+    color: white;
+    padding: 25px 0;
+    text-align: center;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.menu-item {
+    background-color: white;
+    border-radius: 12px;
+    width: 280px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.menu-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    background-color: #f8faff;
+}
+
+.menu-item i {
+    font-size: 2.8rem;
+    color: #4a6fa5;
+    margin-bottom: 20px;
+}
+
+.menu-item h2 {
+    color: #4a6fa5;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.menu-item p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Estilos del pie de página */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 25px;
+    color: #666;
+    font-size: 0.95rem;
+    border-top: 1px soli    d #eee;
+}
+

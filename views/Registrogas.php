@@ -103,11 +103,11 @@ $categorias = $categoriaController->getAllCategorias();
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Obtener referencias a los elementos
+
     const categoriaSelect = document.getElementById('categoria');
     const otraCategoriaDiv = document.getElementById('otraCategoria');
     
-    // Agregar evento change al select de categoría
+
     categoriaSelect.addEventListener('change', function() {
         if (this.value === 'Otro') {
             otraCategoriaDiv.style.display = 'block';
@@ -119,6 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<div>
+    <a href="../index.php" class="menu-item">
+        <h2>Volver</h2>
+    </a>
 
+</div>
 </body>
 </html>
