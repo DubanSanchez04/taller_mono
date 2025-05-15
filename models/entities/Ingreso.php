@@ -1,10 +1,7 @@
 <?php
-
 namespace App\models\entities;
 require_once __DIR__ . '/Model.php';
-
 use App\models\drivers\ConexDB;
-
 class Ingreso extends Model
 {
     protected $id = null;
@@ -156,13 +153,4 @@ class Ingreso extends Model
     }
 
 
-    function printMessage($data)
-    {
-        $json = json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-        if ($json === false) {
-            echo "<script>console.error('Error al codificar en JSON');</script>";
-        } else {
-            echo "<script>console.log($json);</script>";
-        }
-    }
 }

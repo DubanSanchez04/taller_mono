@@ -35,7 +35,7 @@
             <p>Gestiona tus categorías de gastos</p>
         </a>
 
-        <a href="index.php?controller=Reportes&action=index" class="menu-item">
+        <a href="views/Reportes.php" class="menu-item">
             <i class="fas fa-chart-pie"></i>
             <h2>Reportes</h2>
             <p>Visualiza tus reportes mensuales</p>
