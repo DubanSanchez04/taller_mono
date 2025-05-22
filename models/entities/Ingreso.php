@@ -158,7 +158,7 @@ class Ingreso extends Model
         $stmt = $conexDb->prepare($sql);
         if (!$stmt) {
             $conexDb->close();
-            return false;  // Por seguridad, evita insertar si falla
+            return false;  
         }
         $stmt->bind_param("si", $mes, $anio);
         $stmt->execute();
