@@ -13,16 +13,13 @@ $categoriaController = new CategoriasController();
 $res = null;
 $gasto = null;
 
-// Obtener todas las categorías para el selector
 $categorias = $categoriaController->getAllCategorias();
 
-// Obtener el gasto actual para mostrar sus valores actuales
 if (isset($_GET['id'])) {
     $gastoObj = new App\models\entities\Gasto();
     $gastoObj->set('id', $_GET['id']);
     $gasto = $gastoObj->find();
     
-    // Obtener información de la categoría y reporte para este gasto
     if ($gasto) {
         $db = new App\models\drivers\ConexDB();
         $sql = "SELECT b.id, b.value, c.id AS idCategory, c.name AS categoria, 

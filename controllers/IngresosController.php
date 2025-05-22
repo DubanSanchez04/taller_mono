@@ -16,13 +16,21 @@ class ingresosController
     public function saveNewIngreso($request)
     {
         $model = new Ingreso();
+
+        if ($model->existsMesAnio($request['mes'], $request['anio'])) {
+            return 'duplicate';
+        }
+
         $model->set('mes', $request['mes']);
         $model->set('anio', $request['anio']);
-        $model->set('valor', $request['valor'] = !null ? $request['valor'] : 0);
+        $model->set('valor', !empty($request['valor']) ? $request['valor'] : 0);
+
         $res = $model->save();
 
         return $res ? 'yes' : 'not';
     }
+
+
 
     public function updateIngreso($request)
     {
@@ -40,14 +48,6 @@ class ingresosController
         $res = $model->delete();
         return $res ? 'yes' : 'not';
     }
-    function printMessage($data)
-    {
-        $json = json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-        if ($json === false) {
-            echo "<script>console.error('Error al codificar en JSON');</script>";
-        } else {
-            echo "<script>console.log($json);</script>";
-        }
-    }
+
 
 }

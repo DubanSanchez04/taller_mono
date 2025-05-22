@@ -56,7 +56,6 @@ $categorias = $categoriaController->getAllCategorias();
         <option value="Otro">Otro</option>
     </select><br><br>
     
-    <!-- Campos para nueva categoría (ocultos por defecto) -->
     <div id="otraCategoria" style="display: none;">
         <label for="nuevaCategoria">Nueva Categoría:</label>
         <input type="text" name="nuevaCategoria" id="nuevaCategoriaInput"><br><br>

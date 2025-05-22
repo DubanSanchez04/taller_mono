@@ -7,8 +7,10 @@ use App\controllers\IngresosController;
 
 $controller = new IngresosController();
 
-$res=empty($_POST['id']);
-$controller->saveNewIngreso($_POST);
+$controller = new IngresosController();
+
+$res = $controller->saveNewIngreso($_POST);
+
 
 ?>
 <!DOCTYPE html>
@@ -24,9 +26,11 @@ $controller->saveNewIngreso($_POST);
 <h1>Resultado de la operación</h1>
 <?php
 if ($res == 'yes') {
-    echo '<p>Datos guardados</p>';
+    echo '<p>Datos guardados correctamente.</p>';
+} elseif ($res == 'duplicate') {
+    echo '<p style="color:red;">Error: Ya existe un ingreso registrado para ese mes y año.</p>';
 } else {
-    echo  '<p>No se pudo guardar los datos</p>';
+    echo '<p>No se pudo guardar los datos.</p>';
 }
 ?>
 <br>

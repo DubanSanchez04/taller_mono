@@ -151,6 +151,24 @@ class Ingreso extends Model
         $conexDb->close();
         return $ingreso;
     }
+    public function existsMesAnio($mes, $anio)
+    {
+        $conexDb = new ConexDB();
+        $sql = "SELECT COUNT(*) AS count FROM reports WHERE month = ? AND year = ?";
+        $stmt = $conexDb->prepare($sql);
+        if (!$stmt) {
+            $conexDb->close();
+            return false;  // Por seguridad, evita insertar si falla
+        }
+        $stmt->bind_param("si", $mes, $anio);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        $conexDb->close();
+        return $row['count'] > 0;
+    }
+
 
 
 }

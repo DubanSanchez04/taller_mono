@@ -14,7 +14,7 @@ class CategoriasController
 
     public function saveNewCategoria($request)
     {
-        // Validar porcentaje
+
         $porcentaje = floatval($request['percentage']);
         if ($porcentaje <= 0 || $porcentaje > 100) {
             return 'invalid_percentage';
@@ -33,17 +33,16 @@ class CategoriasController
     $model = new Categoria();
     $model->set('id', $request['id']);
 
-    // Verificar si está vinculada a gastos
+
     if ($model->isLinkedToExpenses()) {
         return 'linked_to_expenses';
     }
 
     $model->set('name', $request['name']);
 
-    // No actualizar el porcentaje
-    // $model->set('percentage', floatval($request['percentage']));
 
-    $res = $model->update(['name']); // <-- Actualizaremos solo el campo 'name'
+
+    $res = $model->update(['name']);
     return $res ? 'yes' : 'not';
 }
 
@@ -52,7 +51,6 @@ class CategoriasController
         $model = new Categoria();
         $model->set('id', $id);
         
-        // Verificar si está vinculada a gastos
         if ($model->isLinkedToExpenses()) {
             return 'linked_to_expenses';
         }

@@ -9,7 +9,6 @@ $controller = new CategoriasController();
 $res = null;
 $categoria = null;
 
-// Obtener la categoría actual
 if (isset($_GET['id'])) {
     $categoria = $controller->findCategoria($_GET['id']);
 }
@@ -17,7 +16,6 @@ if (isset($_GET['id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $res = $controller->updateCategoria($_POST);
     
-    // Redirigir a la página principal si la actualización fue exitosa
     if ($res === 'yes') {
         header('Location: ../Categorias.php');
         exit;

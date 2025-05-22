@@ -40,11 +40,9 @@ class GastosController
         $idCategoria = null;
         
         if ($nombre === 'Otro' && !empty($request['nuevaCategoria'])) {
-            // Si se seleccionó "Otro" y se proporcionó un nombre nuevo, crear nueva categoría
             $nombre = $request['nuevaCategoria'];
             $porcentaje = isset($request['porcentaje']) ? floatval($request['porcentaje']) : 0;
             
-            // Validar porcentaje
             if ($porcentaje <= 0 || $porcentaje > 100) {
                 return 'invalid_percentage';
             }
@@ -54,7 +52,6 @@ class GastosController
             $stmt->execute();
           
         } else {
-            // Verificar si la categoría ya existe
             $stmt = $db->prepare("SELECT id FROM categories WHERE name = ?");
             $stmt->bind_param("s", $nombre);
             $stmt->execute();
@@ -68,7 +65,7 @@ class GastosController
             }
         }
 
-        // Insertar o buscar report
+
         $mes = $request['mes'];
         $anio = $request['anio'];
         
@@ -87,7 +84,7 @@ class GastosController
             
         }
 
-        // Insertar gasto
+
         $valor = floatval($request['valor']);
         $stmt = $db->prepare("INSERT INTO bills (value, idCategory, idReport) VALUES (?, ?, ?)");
         $stmt->bind_param("dii", $valor, $idCategoria, $idReporte);
@@ -102,7 +99,6 @@ class GastosController
         $model->set('id', $request['id']);
         $model->set('valor', $request['valor']);
         
-        // Actualizar la categoría si viene en la solicitud
         if (isset($request['idCategory'])) {
             $model->set('idCategory', $request['idCategory']);
         }
@@ -118,4 +114,7 @@ class GastosController
         $res = $model->delete();
         return $res ? 'yes' : 'not';
     }
+
+
+
 }

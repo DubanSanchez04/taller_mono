@@ -94,7 +94,6 @@ class Gasto extends ModelG
 {
     $db = new ConexDB();
     
-    // First, fetch the current record to get idCategory if it's not set
     if ($this->idCategory === null) {
         $sqlFind = "SELECT * FROM bills WHERE id = ?";
         $stmtFind = $db->prepare($sqlFind);
@@ -108,7 +107,6 @@ class Gasto extends ModelG
         $stmtFind->close();
     }
     
-    // Now update with the retrieved or provided idCategory
     $sql = "UPDATE bills SET value = ?, idCategory = ? WHERE id = ?";
     $stmt = $db->prepare($sql);
 
@@ -132,7 +130,6 @@ class Gasto extends ModelG
         $stmt->execute();
         $stmt->close();
 
-        // Opcional: también eliminar el report asociado si no tiene más gastos
 
         $db->close();
         return true;
