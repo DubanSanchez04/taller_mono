@@ -3,47 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Reporte Mensual</title>
-    <link rel="stylesheet" href="views/css/Reportes.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        h2 {
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #f0f0f0;
-        }
-        .exceso {
-            background-color: #fdd;
-            color: #a00;
-            font-weight: bold;
-        }
-        .ok {
-            background-color: #dfd;
-            color: #080;
-        }
-        .advertencia {
-            color: red;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .bueno {
-            color: green;
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="../views/css/reportes.css">
+ 
 </head>
 <body>
 <h2>Reporte de <?= $mes ?? 'mes no definido' ?> de <?= $anio ?? 'año no definido' ?></h2>

@@ -60,7 +60,7 @@ class GastosController
             if ($row = $res->fetch_assoc()) {
                 $idCategoria = $row['id'];
             } else {
-                // Categoría no encontrada - esto no debería ocurrir normalmente
+                
                 return 'category_not_found';
             }
         }
