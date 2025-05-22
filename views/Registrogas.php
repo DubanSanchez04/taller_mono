@@ -53,12 +53,11 @@ $categorias = $categoriaController->getAllCategorias();
                 <?= htmlspecialchars($categoria->get('name')) ?> (<?= htmlspecialchars($categoria->get('percentage')) ?>%)
             </option>
         <?php endforeach; ?>
-        <option value="Otro">Otro</option>
+        
     </select><br><br>
     
     <div id="otraCategoria" style="display: none;">
-        <label for="nuevaCategoria">Nueva Categoría:</label>
-        <input type="text" name="nuevaCategoria" id="nuevaCategoriaInput"><br><br>
+      
         
         <label for="porcentaje">Porcentaje (%):</label>
         <input type="number" name="porcentaje" id="porcentajeInput" step="0.01" min="0.01" max="100"><br>
