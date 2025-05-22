@@ -15,7 +15,7 @@ $categorias = $controlador->getAllCategorias();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Categorías</title>
-    <link rel="stylesheet" href="css/styleregisgastos.css">
+    <link rel="stylesheet" href="css/styleregisgas.css">
 </head>
 <body>
     <h1>GESTIÓN DE CATEGORÍAS</h1>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Reporte Mensual</title>
-    <link rel="stylesheet" href="../views/css/reportes.css">
+    <link rel="stylesheet" href="css/styleregis.css">
  
 </head>
 <body>
